@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Papelería Aries</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #fff0f5, #f0ffff);
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #222;
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff69b4;
+      color: white;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    .form-section {
+      margin-top: 30px;
+    }
+    input, select {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    header {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #ff1493;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Papelería Aries 🎨📚</header>
+  <h1>¿Qué quieres hacer hoy?</h1>
+
+  <button onclick="mostrarConsulta()">Consultar productos disponibles</button>
+  <button onclick="mostrarImpresion()">Imprimir</button>
+
+  <!-- CONSULTA -->
+  <div id="consulta" class="form-section hidden">
+    <h2>¿Qué productos deseas consultar?</h2>
+    <input type="text" id="consultaTexto" placeholder="Escribe aquí...">
+    <br>
+    <button onclick="enviarConsulta()">Enviar</button>
+  </div>
+
+  <!-- IMPRESIÓN -->
+  <div id="impresion" class="form-section hidden">
+    <h2>Sube el archivo que deseas imprimir</h2>
+    <input type="file" id="archivo" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg">
+    <br><br>
+
+    <label>¿Color o blanco y negro?</label><br>
+    <select id="color">
+      <option value="Color">Color</option>
+      <option value="Blanco y Negro">Blanco y Negro</option>
+    </select>
+
+    <div id="opcionesImagen" class="hidden">
+      <br>
+      <label>¿Cuántas imágenes en una hoja tamaño carta?</label><br>
+      <select id="imagenesPorHoja">
+        <option value="2">2 imágenes</option>
+        <option value="4">4 imágenes</option>
+        <option value="8">8 imágenes</option>
+        <option value="30">30 imágenes</option>
+      </select>
+    </div>
+
+    <br>
+    <button onclick="enviarImpresion()">Enviar</button>
+  </div>
+
+  <script>
+    function mostrarConsulta() {
+      document.getElementById('consulta').classList.remove('hidden');
+      document.getElementById('impresion').classList.add('hidden');
+    }
+
+    function mostrarImpresion() {
+      document.getElementById('impresion').classList.remove('hidden');
+      document.getElementById('consulta').classList.add('hidden');
+    }
+
+    function enviarConsulta() {
+      const texto = document.getElementById('consultaTexto').value;
+      const numero = "529981040547";
+      const mensaje = encodeURIComponent("Hola, quiero consultar los siguientes productos:\n" + texto);
+      window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+    }
+
+    document.getElementById('archivo').addEventListener('change', function(e) {
+      const archivo = e.target.files[0];
+      const isImage = archivo && archivo.type.startsWith('image/');
+      document.getElementById('opcionesImagen').classList.toggle('hidden', !isImage);
+    });
+
+    function enviarImpresion() {
+      const archivo = document.getElementById('archivo').files[0];
+      const color = document.getElementById('color').value;
+      const numero = "529981040547";
+      let mensaje = `Hola, quiero imprimir un archivo.\n- Tipo: ${archivo ? archivo.name : "No cargado"}\n- Color: ${color}`;
+
+      if (archivo && archivo.type.startsWith('image/')) {
+        const imagenes = document.getElementById('imagenesPorHoja').value;
+        mensaje += `\n- Imágenes por hoja: ${imagenes}`;
+      }
+
+      alert("Por razones técnicas no se pueden enviar archivos directamente desde la web a WhatsApp.\nEnvía el archivo manualmente después de dar clic en 'Abrir WhatsApp'.");
+      window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>
