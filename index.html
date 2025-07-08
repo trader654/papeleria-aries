@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -61,8 +62,8 @@
   <header>Papelería Aries 🎨📚</header>
   <h1>¿Qué quieres hacer hoy?</h1>
 
-  <!-- BOTÓN FORMULARIO EXTERNO -->
-  <a class="imprimir-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfruyPbjrF-GW1Iu07uP4YegeFbGIx-EaQFRPp4lBTrzHYmJw/viewform?usp=header" target="_blank">
+  <!-- BOTÓN FORMULARIO NUEVO -->
+  <a class="imprimir-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScr0p-9Bt1efFfDcfoJpuztGoial_9ZrKPEdl4nXkeYRotjiw/viewform?usp=header" target="_blank">
     Imprimir ahora 🖨️
   </a>
 
@@ -121,7 +122,8 @@
     function enviarConsulta() {
       const texto = document.getElementById('consultaTexto').value;
       const numero = "529981040547";
-      const mensaje = encodeURIComponent("Hola, quiero consultar los siguientes productos:\n" + texto);
+      const mensaje = encodeURIComponent("Hola, quiero consultar los siguientes productos:
+" + texto);
       window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
     }
 
@@ -135,14 +137,18 @@
       const archivo = document.getElementById('archivo').files[0];
       const color = document.getElementById('color').value;
       const numero = "529981040547";
-      let mensaje = `Hola, quiero imprimir un archivo.\n- Tipo: ${archivo ? archivo.name : "No cargado"}\n- Color: ${color}`;
+      let mensaje = `Hola, quiero imprimir un archivo.
+- Tipo: ${archivo ? archivo.name : "No cargado"}
+- Color: ${color}`;
 
       if (archivo && archivo.type.startsWith('image/')) {
         const imagenes = document.getElementById('imagenesPorHoja').value;
-        mensaje += `\n- Imágenes por hoja: ${imagenes}`;
+        mensaje += `
+- Imágenes por hoja: ${imagenes}`;
       }
 
-      alert("Por razones técnicas no se pueden enviar archivos directamente desde la web a WhatsApp.\nEnvía el archivo manualmente después de dar clic en 'Abrir WhatsApp'.");
+      alert("Por razones técnicas no se pueden enviar archivos directamente desde la web a WhatsApp.
+Envía el archivo manualmente después de dar clic en 'Abrir WhatsApp'.");
       window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
     }
   </script>
